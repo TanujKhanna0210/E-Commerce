@@ -4,7 +4,8 @@ plugins {
     id("kotlin-kapt")
     id ("kotlin-parcelize")
     id ("androidx.navigation.safeargs.kotlin")
-    id ("dagger.hilt.android.plugin")
+    id ("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -37,6 +38,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -45,9 +50,13 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    //Firebase
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
 
     //loading button
     implementation ("br.com.simplepass:loading-button-android:2.2.0")
@@ -65,9 +74,10 @@ dependencies {
     implementation ("com.shuhart.stepview:stepview:1.5.1")
 
     //Android Ktx
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.2")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.5.2")
 
     //Dagger hilt
-    implementation ("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-compiler:2.38.1")
+    implementation ("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-compiler:2.48.1")
 }
