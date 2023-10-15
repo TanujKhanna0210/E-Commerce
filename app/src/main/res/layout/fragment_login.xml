@@ -102,7 +102,7 @@
             android:text="Forgot Password"
             android:textColor="@color/black"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/buttonLoginLogin"
             android:layout_width="0dp"
             android:layout_height="@dimen/mediumButtonHeight"
@@ -111,7 +111,8 @@
             app:layout_constraintStart_toStartOf="@id/guideLineLoginLeft"
             app:layout_constraintEnd_toEndOf="@id/guideLineLoginRight"
             android:layout_marginTop="15dp"
-            android:text="Login"/>
+            android:text="Login"
+            app:spinning_bar_color="@color/white"/>
 
         <ImageView
             android:id="@+id/facebookLogin"
