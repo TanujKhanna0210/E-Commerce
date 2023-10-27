@@ -34,52 +34,66 @@ class MainCategoryViewModel @Inject constructor(
     }
 
     fun fetchSpecialProducts() {
-        viewModelScope.launch {
-            _specialProducts.emit(Resource.Loading())
+        if(!pagingInfo.isSpecialProductsPagingEnd) {
+            viewModelScope.launch {
+                _specialProducts.emit(Resource.Loading())
+            }
+            firestore.collection("Products")
+                .whereEqualTo("category", "Special Products")
+                .limit(pagingInfo.specialProductsPage * 5)
+                .get()
+                .addOnSuccessListener { result ->
+                    val specialProductList = result.toObjects(Product::class.java)
+                    pagingInfo.isSpecialProductsPagingEnd = specialProductList == pagingInfo.oldSpecialProducts
+                    pagingInfo.oldSpecialProducts = specialProductList
+                    viewModelScope.launch {
+                        _specialProducts.emit(Resource.Success(specialProductList))
+                    }
+                    pagingInfo.specialProductsPage++
+                }
+                .addOnFailureListener {
+                    viewModelScope.launch {
+                        _specialProducts.emit(Resource.Failure(it.message.toString()))
+                    }
+                }
         }
-        firestore.collection("Products")
-            .whereEqualTo("category", "Special Products").get()
-            .addOnSuccessListener { result ->
-                val specialProductList = result.toObjects(Product::class.java)
-                viewModelScope.launch {
-                    _specialProducts.emit(Resource.Success(specialProductList))
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _specialProducts.emit(Resource.Failure(it.message.toString()))
-                }
-            }
     }
 
     fun fetchBestDeals() {
-        viewModelScope.launch {
-            _bestDealsProducts.emit(Resource.Loading())
+        if (!pagingInfo.isBestDealsPagingEnd) {
+            viewModelScope.launch {
+                _bestDealsProducts.emit(Resource.Loading())
+            }
+            firestore.collection("Products")
+                .whereEqualTo("category", "Best Deals")
+                .limit(pagingInfo.bestDealsPage * 5)
+                .get()
+                .addOnSuccessListener { result ->
+                    val bestDealsProducts = result.toObjects(Product::class.java)
+                    pagingInfo.isBestDealsPagingEnd = bestDealsProducts == pagingInfo.oldBestDeals
+                    pagingInfo.oldBestDeals = bestDealsProducts
+                    viewModelScope.launch {
+                        _bestDealsProducts.emit(Resource.Success(bestDealsProducts))
+                    }
+                    pagingInfo.bestDealsPage++
+                }
+                .addOnFailureListener {
+                    viewModelScope.launch {
+                        _bestDealsProducts.emit(Resource.Failure(it.message.toString()))
+                    }
+                }
         }
-        firestore.collection("Products")
-            .whereEqualTo("category", "Best Deals").get()
-            .addOnSuccessListener { result ->
-                val bestDealsProducts = result.toObjects(Product::class.java)
-                viewModelScope.launch {
-                    _bestDealsProducts.emit(Resource.Success(bestDealsProducts))
-                }
-            }
-            .addOnFailureListener {
-                viewModelScope.launch {
-                    _bestDealsProducts.emit(Resource.Failure(it.message.toString()))
-                }
-            }
     }
 
     fun fetchBestProducts() {
-        if (!pagingInfo.isPagingEnd) {
+        if (!pagingInfo.isBestProductsPagingEnd) {
             viewModelScope.launch {
                 _bestProducts.emit(Resource.Loading())
             }
             firestore.collection("Products").limit(pagingInfo.bestProductsPage * 10).get()
                 .addOnSuccessListener { result ->
                     val bestProducts = result.toObjects(Product::class.java)
-                    pagingInfo.isPagingEnd = bestProducts == pagingInfo.oldBestProducts
+                    pagingInfo.isBestProductsPagingEnd = bestProducts == pagingInfo.oldBestProducts
                     pagingInfo.oldBestProducts = bestProducts
                     viewModelScope.launch {
                         _bestProducts.emit(Resource.Success(bestProducts))
@@ -98,5 +112,13 @@ class MainCategoryViewModel @Inject constructor(
 internal data class PagingInfo(
     var bestProductsPage: Long = 1,
     var oldBestProducts: List<Product> = emptyList(),
-    var isPagingEnd: Boolean = false
+    var isBestProductsPagingEnd: Boolean = false,
+
+    var bestDealsPage: Long = 1,
+    var oldBestDeals: List<Product> = emptyList(),
+    var isBestDealsPagingEnd: Boolean = false,
+
+    var specialProductsPage: Long = 1,
+    var oldSpecialProducts: List<Product> = emptyList(),
+    var isSpecialProductsPagingEnd: Boolean = false
 )

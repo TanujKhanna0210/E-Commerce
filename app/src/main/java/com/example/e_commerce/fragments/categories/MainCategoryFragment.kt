@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce.R
 import com.example.e_commerce.adapters.BestDealsAdapter
 import com.example.e_commerce.adapters.BestProductAdapter
@@ -107,8 +108,39 @@ class MainCategoryFragment: Fragment(R.layout.fragment_main_category) {
             }
         }
 
+        bestProductsPaging()
+        bestDealsProductsPaging()
+        specialProductsPaging()
+    }
+
+    private fun specialProductsPaging() {
+        binding.rvSpecialProducts.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if(!recyclerView.canScrollVertically(1) && dx!=0){
+                    viewModel.fetchSpecialProducts()
+                }
+            }
+        })
+    }
+
+    private fun bestDealsProductsPaging() {
+        binding.rvBestDealsProducts.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if(!recyclerView.canScrollHorizontally(1) && dx!=0){
+                    viewModel.fetchBestDeals()
+                }
+            }
+        })
+    }
+
+    private fun bestProductsPaging() {
         binding.nestedScrollMainCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
-            if(v.getChildAt(0).bottom <= v.height + scrollY) {
+            if (v.getChildAt(0).bottom <= v.height + scrollY) {
                 viewModel.fetchBestProducts()
             }
         })
