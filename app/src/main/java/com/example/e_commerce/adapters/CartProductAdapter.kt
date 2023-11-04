@@ -58,7 +58,7 @@ class CartProductAdapter : RecyclerView.Adapter<CartProductAdapter.CartProductsV
         holder.bind(cartProduct)
 
         holder.itemView.setOnClickListener {
-            onClick?.invoke(cartProduct)
+            onProductClick?.invoke(cartProduct)
         }
 
         holder.binding.imagePlus.setOnClickListener {
@@ -70,7 +70,7 @@ class CartProductAdapter : RecyclerView.Adapter<CartProductAdapter.CartProductsV
         }
     }
 
-    var onClick: ((CartProduct) -> Unit) ?= null
+    var onProductClick: ((CartProduct) -> Unit) ?= null
     var onPlusClick: ((CartProduct) -> Unit) ?= null
     var onMinusClick: ((CartProduct) -> Unit) ?= null
 }
