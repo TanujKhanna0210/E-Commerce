@@ -22,7 +22,9 @@ class BestProductAdapter: RecyclerView.Adapter<BestProductAdapter.BestProductsVi
 
                     val priceAfterOffer = product.offerPercentage.getProductPrice(product.price)
                     tvNewPrice.text = "$ ${String.format("%.2f",priceAfterOffer)}"
-                    tvPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    if (product.offerPercentage != null) {
+                        tvPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    }
 
                 if(product.offerPercentage == null)
                     tvNewPrice.visibility = View.INVISIBLE

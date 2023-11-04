@@ -17,6 +17,7 @@ import com.example.e_commerce.adapters.SizesAdapter
 import com.example.e_commerce.adapters.ViewPager2ImagesAdapter
 import com.example.e_commerce.data.CartProduct
 import com.example.e_commerce.databinding.FragmentProductDetailsBinding
+import com.example.e_commerce.helper.getProductPrice
 import com.example.e_commerce.util.Resource
 import com.example.e_commerce.util.hideBottomNavigationView
 import com.example.e_commerce.viewmodel.DetailsViewModel
@@ -91,7 +92,8 @@ class ProductDetailsFragment: Fragment() {
 
         binding.apply {
             tvProductName.text = product.name
-            tvProductPrice.text = "${product.price}"
+            val priceAfterOffer = product.offerPercentage.getProductPrice(product.price)
+            tvProductPrice.text = "$ ${String.format("%.2f",priceAfterOffer)}"
             tvProductDescription.text = product.description
 
             if (product.colors.isNullOrEmpty())
