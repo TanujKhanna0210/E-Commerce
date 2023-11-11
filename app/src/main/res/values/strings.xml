@@ -2,4 +2,13 @@
     <string name="app_name">E-Commerce</string>
     <string name="rightAddress">The Right Address\nFor Shopping\nAnyday</string>
     <string name="quality">It is now easy to reach the\nbest quality among all the\nproducts on the internet!</string>
+    <string name="address">Address</string>
+    <string name="location">Location</string>
+    <string name="full_name">Full Name</string>
+    <string name="street">Street</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="phone">Phone</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 </resources>
