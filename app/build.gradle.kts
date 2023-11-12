@@ -58,6 +58,7 @@ dependencies {
     //Firebase
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
 
     //loading button
     implementation ("br.com.simplepass:loading-button-android:2.2.0")
@@ -81,4 +82,7 @@ dependencies {
     //Dagger hilt
     implementation ("com.google.dagger:hilt-android:2.48.1")
     kapt("com.google.dagger:hilt-compiler:2.48.1")
+
+    //Coroutines with firebase
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.1")
 }
