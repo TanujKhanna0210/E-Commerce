@@ -13,7 +13,7 @@ import com.example.e_commerce.data.order.OrderStatus
 import com.example.e_commerce.data.order.getOrderStatus
 import com.example.e_commerce.databinding.OrderItemBinding
 
-class OrdersAdapter : Adapter<OrdersAdapter.OrdersViewHolder>() {
+class AllOrdersAdapter : Adapter<AllOrdersAdapter.OrdersViewHolder>() {
 
     inner class OrdersViewHolder(private val binding: OrderItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(order: Order) {
