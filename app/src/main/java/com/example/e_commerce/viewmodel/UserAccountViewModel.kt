@@ -15,7 +15,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -36,6 +38,9 @@ class UserAccountViewModel @Inject constructor(
 
     private val _updateInfo = MutableStateFlow<Resource<User>>(Resource.Unspecified())
     val updateInfo = _updateInfo.asStateFlow()
+
+    private val _resetPassword = MutableSharedFlow<Resource<String>>()
+    val resetPassword = _resetPassword.asSharedFlow()
 
     init {
         getUser()
@@ -131,4 +136,20 @@ class UserAccountViewModel @Inject constructor(
         }
     }
 
+    fun resetPassword(email: String) {
+        viewModelScope.launch {
+            _resetPassword.emit(Resource.Loading())
+        }
+        auth.sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                viewModelScope.launch {
+                    _resetPassword.emit(Resource.Success(email))
+                }
+            }
+            .addOnFailureListener {
+                viewModelScope.launch {
+                    _resetPassword.emit(Resource.Failure(it.message.toString()))
+                }
+            }
+    }
 }

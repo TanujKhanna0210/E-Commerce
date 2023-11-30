@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.e_commerce.data.User
 import com.example.e_commerce.databinding.FragmentUserAccountBinding
+import com.example.e_commerce.dialog.setupBottomSheetDialog
 import com.example.e_commerce.util.Resource
 import com.example.e_commerce.viewmodel.UserAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,6 +87,12 @@ class UserAccountFragment : Fragment() {
                     }
                     else -> Unit
                 }
+            }
+        }
+
+        binding.tvUpdatePassword.setOnClickListener {
+            setupBottomSheetDialog { email ->
+                viewModel.resetPassword(email)
             }
         }
 
