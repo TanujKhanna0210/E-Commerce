@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="@id/guideLineRegisterLeft"
             app:layout_constraintEnd_toEndOf="@id/guideLineRegisterRight"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Kleine"
+            android:text="ShopEase"
             />
 
         <TextView
