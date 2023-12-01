@@ -61,6 +61,10 @@ class BillingFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.imageCloseBilling.setOnClickListener {
+            findNavController().navigateUp()
+        }
         
         setupBillingProductsRv()
         setupAddressRv()

@@ -39,6 +39,10 @@ class CartFragment: Fragment(R.layout.fragment_cart) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.imageCloseCart.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         setupCartRv()
 
         var totalPrice = 0f
